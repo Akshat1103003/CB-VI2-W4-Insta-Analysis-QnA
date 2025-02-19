@@ -1,11 +1,11 @@
 ### Q1. How many unique post types are found in the 'fact_content' table ?
 Query : 
-```
+```sql
 select distinct post_type  from fact_content ;
 ```
 ### Q2.What are the highest and lowest recorded impressions for each post type ? 
 Query :
-```
+```sql
 select 
 		post_type,
         max(fc.impressions) as MaximumImpressions ,
@@ -15,7 +15,7 @@ select
 ```
 ### Q3. Filter all the posts that were published on a weekend in the month of March and April and export them to a separate csv file.
 Query :
-``` 
+```sql
 select fc.*,dd.weekday_or_weekend
 from fact_content fc
     join dim_dates dd
@@ -30,7 +30,7 @@ from fact_content fc
 • total_profile_visits  
 • total_new_followers  
  Query :
- ```
+ ```sql
 select 
 	monthname(fa.date) as MonthName,
 	sum(profile_visits) as total_profile_visits,
@@ -40,7 +40,7 @@ group by MonthName ;
 ```
 ### Q5. Write a CTE that calculates the total number of 'likes’ for each 'post_category' during the month of 'July' and subsequently, arrange the 'post_category' values in descending order according to their total likes .
 Query :
-```
+```sql
 with cte_1 as (
 select 
 	post_category,
@@ -56,7 +56,7 @@ cte_1 order by total_likes ;
 • post_category_names   
 • post_category_count  
 Query :
-```
+```sql
 select 
 	group_concat(distinct fc.post_category order by fc.post_category asc separator "," ) as Categories,
     monthname(fc.date) as month_name
@@ -69,7 +69,7 @@ group by month_name ;
 • total_reach  
 • reach_percentage  
 Query :
-```
+```sql
 with cte_1 as (
 	select fc.post_type,
 	sum(fc.reach) as total_reach ,
@@ -91,7 +91,7 @@ The final output columns should consist of:
 • total_comments  
 • total_saves  
 Query :
-```
+```sql
 WITH cte_1 AS (
     SELECT 
         fc.date,
@@ -123,7 +123,7 @@ ORDER BY month_num;
 • date  
 • new_followers  
 Query :  
-```
+```sql
 with cte_1 as (
 select 
 	month(fa.date) as month ,
@@ -139,7 +139,7 @@ order by month(date) ,nf_rank ,date ;
 • post_type  
 • total_shares  
 Query :
-```
+```sql
 with cte_1 as ( 
 select sum(fc.shares) as total_shares ,week(fc.date) as week_no,
 sum(shares)*100 / sum(sum(shares)) over() as shares_perc 
