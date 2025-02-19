@@ -60,7 +60,6 @@ Query :
 select 
 	group_concat(distinct fc.post_category order by fc.post_category asc separator "," ) as Categories,
     monthname(fc.date) as month_name
-    count(*) as post_category_count
 from fact_content fc 
 group by month_name ;
 
