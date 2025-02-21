@@ -3,6 +3,8 @@ Query :
 ```sql
 select distinct post_type  from fact_content ;
 ```
+![image](https://github.com/user-attachments/assets/56809f75-075a-4040-909c-25401c81a51c)
+
 ### Q2.What are the highest and lowest recorded impressions for each post type ? 
 Query :
 ```sql
@@ -13,6 +15,8 @@ select
         from fact_content fc 
         group by post_type ;
 ```
+![image](https://github.com/user-attachments/assets/5ba11804-8b86-44e1-bbc9-86065742ada3)
+
 ### Q3. Filter all the posts that were published on a weekend in the month of March and April and export them to a separate csv file.
 Query :
 ```sql
@@ -24,6 +28,8 @@ from fact_content fc
 	    and
 	dd.weekday_or_weekend ="Weekend" ;
 ```
+![image](https://github.com/user-attachments/assets/52eadd42-0611-425a-93e0-76fde528d0cf)
+
 
 ### Q4. Create a report to get the statistics for the account. The final output includes the following fields : 
 • month_name  
@@ -38,6 +44,8 @@ select
     from fact_account fa 
 group by MonthName ;
 ```
+![image](https://github.com/user-attachments/assets/d3cfb9b8-8374-4377-93ec-a31ab0f4015e)
+
 ### Q5. Write a CTE that calculates the total number of 'likes’ for each 'post_category' during the month of 'July' and subsequently, arrange the 'post_category' values in descending order according to their total likes .
 Query :
 ```sql
@@ -51,6 +59,8 @@ group by post_category )
 select post_category ,total_likes  from cte_1
 cte_1 order by total_likes ;
 ```
+![image](https://github.com/user-attachments/assets/a4e99383-0909-4fc7-90df-3d43674232e8)
+
 ### Q6. Create a report that displays the unique post_category names alongside their respective counts for each month. The output should have three columns :
 • month_name   
 • post_category_names   
@@ -62,8 +72,10 @@ select
     monthname(fc.date) as month_name
 from fact_content fc 
 group by month_name ;
-
 ```
+
+![image](https://github.com/user-attachments/assets/17e09593-9dfa-4564-b320-755d72a8f0bd)
+
 ### Q7. What is the percentage breakdown of total reach by post type? The final output includes the following fields:
 • post_type  
 • total_reach  
@@ -80,6 +92,8 @@ with cte_1 as (
 select *,total_reach*100 / sum(total_reach) over (partition by post_type) as reach_perc 
 from cte_1 ;
 ```
+![image](https://github.com/user-attachments/assets/576adbcc-b3cb-4dc1-b5fa-ddbc6af3bf9e)
+
 ### Q8. Create a report that includes the quarter, total comments, and total saves recorded for each post category. Assign the following quarter :
 groupings :  
 (January, February, March) → “Q1”  
@@ -93,7 +107,8 @@ The final output columns should consist of:
 Query :
 ```sql
 WITH cte_1 AS (
-    SELECT 
+    SELECT
+        fc.post_category,
         fc.date,
         MONTHNAME(fc.date) AS month_name,
         MONTH(fc.date) AS month_num,  
@@ -109,15 +124,19 @@ WITH cte_1 AS (
     FROM fact_content fc
 )
 SELECT 
+    post_category,
     month_name, 
     month_num,  
+    quarter,
     SUM(comments) AS total_comments, 
-    SUM(saves) AS total_saves,
-    quarter
+    SUM(saves) AS total_saves
 FROM cte_1
-GROUP BY month_num, quarter, month_name
-ORDER BY month_num;
+GROUP BY post_category, month_name, month_num, quarter
+ORDER BY month_num, post_category;
 ```
+![image](https://github.com/user-attachments/assets/066286f7-af46-4999-900f-49adb78c1625)
+
+
 ### Q9. List the top three dates in each month with the highest number of new followers. The final output should include the following columns :
 • month  
 • date  
@@ -135,6 +154,8 @@ from cte_1
 where nf_rank <=3
 order by month(date) ,nf_rank ,date ;
 ```
+![image](https://github.com/user-attachments/assets/a5b51346-66a6-4eac-b427-753b547b5626)
+
 ### Q10. Create a stored procedure that takes the 'Week_no' as input and generates a report displaying the total shares for each 'Post_type'. The output of the procedure should consist of two columns:
 • post_type  
 • total_shares  
@@ -148,3 +169,5 @@ group by week_no
 )
 select week_no,total_shares,shares_perc from cte_1 ;
 ```
+![image](https://github.com/user-attachments/assets/abf146f1-8d27-468b-8177-6cbf2ecf666a)
+
