@@ -44,7 +44,7 @@ select
     from fact_account fa 
 group by MonthName ;
 ```
-![image](https://github.com/user-attachments/assets/d3cfb9b8-8374-4377-93ec-a31ab0f4015e)
+![image](https://github.com/user-attachments/assets/01627b7e-517e-41e0-88c8-6383fbada97d)
 
 ### Q5. Write a CTE that calculates the total number of 'likes’ for each 'post_category' during the month of 'July' and subsequently, arrange the 'post_category' values in descending order according to their total likes .
 Query :
