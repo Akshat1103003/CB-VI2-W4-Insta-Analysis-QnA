@@ -74,7 +74,7 @@ from fact_content fc
 group by month_name ;
 ```
 
-![image](https://github.com/user-attachments/assets/17e09593-9dfa-4564-b320-755d72a8f0bd)
+![image](https://github.com/user-attachments/assets/999def14-26c0-44d1-bdfa-79b502f01cb0)
 
 ### Q7. What is the percentage breakdown of total reach by post type? The final output includes the following fields:
 • post_type  
